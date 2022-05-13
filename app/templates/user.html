@@ -1,4 +1,4 @@
-{% extends "base.html.j2" %}
+{% extends "base.html" %}
 {% block content %}
     <table>
         <tr valign="top">
@@ -24,6 +24,6 @@
     </table>
     <hr />
     {% for post in posts %}
-        {% include "_post.html.j2" %}
+        {% include "_post.html" %}
     {% endfor %}
 {% endblock content %}

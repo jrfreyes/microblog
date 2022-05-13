@@ -23,7 +23,7 @@ def index():
             'body': 'The Avengers movie was so cool!'
         },
     ]
-    return render_template('index.html.j2',
+    return render_template('index.html',
                            title='Home',
                            posts=posts)
 
@@ -43,7 +43,7 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template('login.html.j2',
+    return render_template('login.html',
                            title='Sign In',
                            form=form)
 
@@ -66,7 +66,7 @@ def register():
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-    return render_template('register.html.j2', title='Register', form=form)
+    return render_template('register.html', title='Register', form=form)
 
 
 @app.route('/user/<username>')
@@ -77,7 +77,7 @@ def user(username):
         {'author': user, 'body': 'Test post #1'},
         {'author': user, 'body': 'Test post #2'},
     ]
-    return render_template('user.html.j2', user=user, posts=posts)
+    return render_template('user.html', user=user, posts=posts)
 
 
 @app.before_request
@@ -102,6 +102,6 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
 
-    return render_template('edit_profile.html.j2',
+    return render_template('edit_profile.html',
                            title='Edit Profile',
                            form=form)
