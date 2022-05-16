@@ -45,10 +45,21 @@
                         </li>
                     {% endif %}
                 </ul>
+                {% if g.search_form %}
+                <form 
+                    class="navbar-form navbar-left" 
+                    method="get"
+                    action="{{ url_for('main.search') }}">
+                    <div class="form-group">
+                        {{ g.search_form.q(size=20, class="form-control",
+                            placeholder=g.search_form.q.label.text) }}
+                    </div>
+                </form>
+                {% endif %}    
             </div>
         </div>
     </nav>
-{% endblock %}
+{% endblock navbar %}
 {% block content %}
     <div class="container">
         {% with messages = get_flashed_messages() %}
@@ -57,16 +68,16 @@
             {% endif %}
         {% endwith %}
         {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
+        {% block app_content %}{% endblock app_content %}
     </div>
-{% endblock %}
+{% endblock content %}
 {% block scripts %}
     {{ super() }}
     {{ moment.include_moment() }}
     {{ moment.lang(g.locale) }}
     <script>
         function translate(sourceElem, destElem, sourceLang, destLang) {
-            $(destElem).html('<img src="{{ url_for('static', filename='loading.gif') }}" alt="loading">');
+            $(destElem).html('<img src="{{ url_for('static', filename='loading.gif') }}" alt="loading" height="16" width="16">');
             $.post('/translate', {
                 text: $(sourceElem).text(),
                 source_language: sourceLang,
@@ -78,4 +89,4 @@
             });
         }
     </script>
-{% endblock %}
+{% endblock scripts %}

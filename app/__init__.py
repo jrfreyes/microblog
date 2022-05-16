@@ -1,6 +1,8 @@
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
+from ssl import create_default_context
+from elasticsearch import Elasticsearch
 from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -20,6 +22,7 @@ mail = Mail()
 bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
+ssl_context = create_default_context()
 
 
 def create_app(config_class=Config):
@@ -33,6 +36,18 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     moment.init_app(app)
     babel.init_app(app)
+
+    if all(app.config[key] for key in ['ELASTICSEARCH_URL',
+                                       'ELASTICSEARCH_CERT',
+                                       'ELASTICSEARCH_USER',
+                                       'ELASTICSEARCH_PASS']):
+        ssl_context.load_verify_locations(cafile=app.config['ELASTICSEARCH_CERT'])
+        app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']],
+                                          ssl_context=ssl_context,
+                                          http_auth=(app.config['ELASTICSEARCH_USER'],
+                                                     app.config['ELASTICSEARCH_PASS']))
+    else:
+        app.elasticsearch = None
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
