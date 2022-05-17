@@ -1,6 +1,6 @@
 *.py[cod]
 *$py.class
-.env
+*.env
 elasticsearch
 
 # C extensions

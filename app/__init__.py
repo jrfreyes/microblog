@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
-from ssl import create_default_context
+from ssl import create_default_context, CERT_NONE
 from elasticsearch import Elasticsearch
 from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
@@ -37,17 +37,23 @@ def create_app(config_class=Config):
     moment.init_app(app)
     babel.init_app(app)
 
+    # If credentials present use SSL
     if all(app.config[key] for key in ['ELASTICSEARCH_URL',
                                        'ELASTICSEARCH_CERT',
                                        'ELASTICSEARCH_USER',
                                        'ELASTICSEARCH_PASS']):
         ssl_context.load_verify_locations(cafile=app.config['ELASTICSEARCH_CERT'])
+        ssl_context.check_hostname = False
+        ssl_context.verify_mode = CERT_NONE
         app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']],
                                           ssl_context=ssl_context,
                                           http_auth=(app.config['ELASTICSEARCH_USER'],
                                                      app.config['ELASTICSEARCH_PASS']))
     else:
-        app.elasticsearch = None
+        app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+            if app.config['ELASTICSEARCH_URL'] else None
+
+    
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
