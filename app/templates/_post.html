@@ -5,12 +5,14 @@
                 <img src="{{ post.author.avatar(70) }}"
                      alt="{{ post.author.username }}'s avatar"
                      height="70"
-                     width="70" />
+                     width="70"/>
             </a>
         </td>
         <td>
             {% set user_link %}
-            <a href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a>
+            <span class="user_popup">
+                <a href="{{ url_for('main.user', username=post.author.username) }}">{{ post.author.username }}</a>
+            </span>
         {% endset %}
         {{ _('%(username)s said %(when)s',
         username=user_link, when=moment(post.timestamp).fromNow()) }}
