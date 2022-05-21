@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-05-19 15:39+0900\n"
+"POT-Creation-Date: 2022-05-21 17:39+0900\n"
 "PO-Revision-Date: 2022-05-14 20:37+0900\n"
 "Last-Translator: JUSTIN RUPERT REYES <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: app/__init__.py:20
+#: app/__init__.py:22
 msgid "Please log in to access this page."
 msgstr "ログインしてからアクセスしてください。"
 
@@ -159,14 +159,22 @@ msgstr "自分のアカウントはフォロー解除することが出来ませ
 msgid "You are not following %(username)s."
 msgstr "%(username)sさんをフォローしていません。"
 
-#: app/main/routes.py:179
+#: app/main/routes.py:180
 #, fuzzy
 msgid "Your message has been sent."
 msgstr "パスワードがリセットされました。"
 
-#: app/main/routes.py:181
+#: app/main/routes.py:182
 msgid "Send Message"
 msgstr "メッセージを送る"
+
+#: app/main/routes.py:218
+msgid "An export task is currently in progress"
+msgstr "エクスポートタスクがすでに行っています"
+
+#: app/main/routes.py:220
+msgid "Exporting posts..."
+msgstr "投稿をエクスポート中…"
 
 #: app/templates/_page_nav.html:5
 msgid "Newer posts"
@@ -197,15 +205,15 @@ msgstr "ログイン"
 msgid "Messages"
 msgstr "メッセージ"
 
-#: app/templates/base.html:46
+#: app/templates/base.html:53
 msgid "Profile"
 msgstr "プロフィール"
 
-#: app/templates/base.html:49
+#: app/templates/base.html:56
 msgid "Logout"
 msgstr "ログアウト"
 
-#: app/templates/base.html:93
+#: app/templates/base.html:113
 msgid "Error: Could not contact server."
 msgstr "エラー：サーバーに接続できませんでした。"
 
@@ -261,15 +269,19 @@ msgstr "%(count)dフォロー中"
 msgid "Edit your profile"
 msgstr "プロフィールを編集"
 
-#: app/templates/user.html:35 app/templates/user_popup.html:32
+#: app/templates/user.html:33
+msgid "Export your posts"
+msgstr "投稿をエクスポート"
+
+#: app/templates/user.html:42 app/templates/user_popup.html:32
 msgid "Follow"
 msgstr "フォロー"
 
-#: app/templates/user.html:43 app/templates/user_popup.html:40
+#: app/templates/user.html:50 app/templates/user_popup.html:40
 msgid "Unfollow"
 msgstr "フォロー解除"
 
-#: app/templates/user.html:51
+#: app/templates/user.html:58
 msgid "Send private message"
 msgstr "プライベートメッセージを送る"
 

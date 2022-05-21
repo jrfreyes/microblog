@@ -11,6 +11,8 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
+from redis import Redis
+import rq
 from config import Config
 
 db = SQLAlchemy()
@@ -36,6 +38,9 @@ def create_app(config_class=Config):
     bootstrap.init_app(app)
     moment.init_app(app)
     babel.init_app(app)
+
+    app.redis = Redis.from_url(app.config['REDIS_URL'])
+    app.task_queue = rq.Queue('microblog-tasks', connection=app.redis)
 
     # If credentials present use SSL
     if all(app.config[key] for key in ['ELASTICSEARCH_URL',
